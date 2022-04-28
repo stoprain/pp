@@ -67,6 +67,8 @@ tfliteModel.then(
 );
 
 async function openCamera() {
+  VIDEO.playsInline = true;
+  VIDEO.autoplay = true;
   const webcam = await tf.data.webcam(VIDEO, {
     resizeWidth: 512,
     resizeHeight: 512,
