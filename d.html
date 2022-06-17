@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <style>
+      .wrapper{
+        display: flex;
+        flex-direction: column;
+      }
+      .inputItem {
+        flex: 1;
+        margin: 20px 10px;
+        height: 40px;
+        line-height: 40px;
+        border: 2px solid grey;
+        border-radius: 4px;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper"">
+      <input id="singleCanvasSize" placeholder="single canvas size" type="number" class="inputItem"/>
+      <input id="canvasCount" placeholder="canvas count" type="number" class="inputItem"/>
+      <input id="redirectUrl" placeholder="redirect url"  class="inputItem"/>
+      <button id="generateCanvases"  class="inputItem">Generate Canvases</button>
+      <button id="clickMeRedirection"  class="inputItem">Redirect</button>
+    </div>
+    <script>
+      const btn = document.getElementById('clickMeRedirection')
+      btn.addEventListener('click', () => {
+        const redirectUrl = document.getElementById('redirectUrl').value
+        window.open(redirectUrl)
+      })
+    </script>
+    <script>
+      let counter = 0
+      const createImage = () => {
+        const singleCanvasSize = Number(document.getElementById('singleCanvasSize').value)
+        const canvas = document.createElement('canvas')
+        canvas.height = singleCanvasSize
+        canvas.width = singleCanvasSize
+        canvas.style.height = '100px'
+        canvas.style.width = '100px'
+        canvas.style.margin = '20px'
+        const ctx = canvas.getContext('2d')
+        ctx.fillStyle = "grey"
+        ctx.fillRect(0, 0, singleCanvasSize, singleCanvasSize)
+        document.body.appendChild(canvas)
+      }
+      const createImages = (n) => {
+        const ctxs = []
+        for (let i = 0; i < n; i++) {
+          ctxs.push(createImage())
+        }
+      }
+      document.getElementById('generateCanvases').addEventListener('click', () => {
+        const canvasCount = Number(document.getElementById('canvasCount').value)
+        createImages(canvasCount)
+      })
+    </script>
+  </body>
+</html>
