@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+​
+  <body>
+    <div>
+      <input id="singleCanvasSize" placeholder="single canvas size" type="number" style="display: block; margin: 10px";/>
+      <input id="canvasCount" placeholder="canvas count" type="number" style="display: block; margin: 10px"/>
+      <input id="redirectUrl" placeholder="redirect url"  style="display: block; margin: 10px"/>
+      <button id="generateCanvases" style="display: block; margin: 10px">Generate Canvases</button>
+      <button id="clickMeRedirection" style="display: block; margin: 10px">Redirect</button>
+    </div>
+    <script>
+      const btn = document.getElementById('clickMeRedirection')
+      
+      btn.addEventListener('click', () => {
+        const redirectUrl = document.getElementById('redirectUrl').value
+        window.open(redirectUrl)
+      })
+    </script>
+    <script>
+      let counter = 0
+​
+      const createImage = () => {
+        const singleCanvasSize = Number(document.getElementById('singleCanvasSize').value)
+        const canvas = document.createElement('canvas')
+        canvas.height = singleCanvasSize
+        canvas.width = singleCanvasSize
+​
+        const ctx = canvas.getContext('2d')
+        ctx.strokeRect(0, 0, singleCanvasSize, singleCanvasSize)
+        return canvas
+      }
+​
+      const createImages = (n) => {
+        const ctxs = []
+        for (let i = 0; i < n; i++) {
+          ctxs.push(createImage())
+        }
+      }
+      
+      document.getElementById('generateCanvases').addEventListener('click', () => {
+        const canvasCount = Number(document.getElementById('canvasCount').value)
+        createImages(canvasCount)
+      })
+      
+    </script>
+  </body>
+</html>
