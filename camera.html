@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="“en”">
+  <head>
+    <meta charset=“utf-8" />
+  </head>
+  <body>
+    <div></div>
+    <script>
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(function (stream) {
+          /* 使用这个 stream stream */
+        })
+        .catch(function (err) {
+          console.log(err)
+        });
+    </script>
+  </body>
+</html>
