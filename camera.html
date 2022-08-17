@@ -7,12 +7,18 @@
     <div></div>
     <script>
       navigator.mediaDevices
-        .getUserMedia(constraints)
+        .getUserMedia({
+          audio: true,
+          video: {
+            width: { min: 1280 },
+            height: { min: 720 },
+          },
+        })
         .then(function (stream) {
           /* 使用这个 stream stream */
         })
         .catch(function (err) {
-          console.log(err)
+          console.log(err);
         });
     </script>
   </body>
