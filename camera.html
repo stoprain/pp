@@ -19,6 +19,13 @@
         })
         .catch(function (err) {
           console.log(err);
+          navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: {
+              width: { min: 1280 },
+              height: { min: 720 },
+            },
+          });
         });
     </script>
   </body>
