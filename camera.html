@@ -69,7 +69,7 @@
                 );
                 console.log(imageData);
                 const start = Date.now();
-                getLuminosity(imageData);
+                getLuminosity(imageData.data);
                 console.log(Date.now() - start);
               }, 5000);
             } catch (e) {
