@@ -4,8 +4,23 @@
     <meta charset=“utf-8" />
   </head>
   <body>
-    <div></div>
+    <div>
+      <canvas id="tagCanvas" />
+      <video id="video" />
+    </div>
     <script>
+      const getLuminosity = (imageData) => {
+        let result = 0;
+        let x = 0;
+        for (let i = 0; i < imageData.length; i += 4) {
+          const r = imageData[i];
+          const g = imageData[i + 1];
+          const b = imageData[i + 2];
+          result += 0.299 * r + 0.587 * g + 0.114 * b;
+          x += 1;
+        }
+        return result / x;
+      };
       navigator.mediaDevices
         .getUserMedia({
           audio: true,
@@ -15,7 +30,38 @@
           },
         })
         .then(function (stream) {
-          /* 使用这个 stream stream */
+          const video = document.getElementById("video");
+          var createSrc = window.URL
+            ? window.URL.createObjectURL
+            : function (stream) {
+                return stream;
+              };
+          video.src = createSrc(stream);
+          video.play();
+          video.onloadedmetadata = () => {
+            var canvas = document.querySelector("#tagCanvas");
+            var ctx = canvas.getContext("2d");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0);
+            try {
+              var imageUrl = canvas.toDataURL();
+              console.log(imageUrl);
+              setInterval(() => {
+                const imageData = ctx.getImageData(
+                  0,
+                  0,
+                  canvas.width,
+                  canvas.height
+                );
+                const start  = Date.now()
+                getLuminosity(imageData);
+                console.log(Date.now() - start)
+              });
+            } catch (e) {
+              alert("Error in getting canvas url");
+            }
+          };
         })
         .catch(function (err) {
           console.log(err);
