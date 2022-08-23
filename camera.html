@@ -53,11 +53,14 @@
             var ctx = canvas.getContext("2d");
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            ctx.drawImage(video, 0, 0);
+            
             try {
-              var imageUrl = canvas.toDataURL();
-              console.log(imageUrl);
+              
               setInterval(() => {
+                
+                ctx.drawImage(video, 0, 0);
+                var imageUrl = canvas.toDataURL();
+              console.log(imageUrl);
                 const imageData = ctx.getImageData(
                   0,
                   0,
@@ -67,7 +70,7 @@
                 const start = Date.now();
                 getLuminosity(imageData);
                 console.log(Date.now() - start);
-              });
+              }, 2000);
             } catch (e) {
               alert("Error in getting canvas url");
             }
