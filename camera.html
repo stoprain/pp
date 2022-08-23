@@ -6,7 +6,15 @@
   <body>
     <div>
       <canvas id="tagCanvas" />
-      <video id="video" />
+      <video
+        id="video"
+        preload="auto"
+        loop
+        playsinline
+        webkit-playsinline="true"
+        x5-playsinline="true"
+        muted="true"
+      />
     </div>
     <script>
       const getLuminosity = (imageData) => {
@@ -31,14 +39,16 @@
         })
         .then(function (stream) {
           const video = document.getElementById("video");
-          var createSrc = window.URL
-            ? window.URL.createObjectURL
-            : function (stream) {
-                return stream;
-              };
-          video.src = createSrc(stream);
-          video.play();
+          if ("srcObject" in video) {
+            video.srcObject = stream;
+            delete video.src;
+          } else {
+            video.src = stream;
+          }
+
           video.onloadedmetadata = () => {
+            video.play();
+            video.muted = true;
             var canvas = document.querySelector("#tagCanvas");
             var ctx = canvas.getContext("2d");
             canvas.width = video.videoWidth;
@@ -54,9 +64,9 @@
                   canvas.width,
                   canvas.height
                 );
-                const start  = Date.now()
+                const start = Date.now();
                 getLuminosity(imageData);
-                console.log(Date.now() - start)
+                console.log(Date.now() - start);
               });
             } catch (e) {
               alert("Error in getting canvas url");
