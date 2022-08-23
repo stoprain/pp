@@ -67,10 +67,11 @@
                   canvas.width,
                   canvas.height
                 );
+                console.log(imageData);
                 const start = Date.now();
                 getLuminosity(imageData);
                 console.log(Date.now() - start);
-              }, 2000);
+              }, 5000);
             } catch (e) {
               alert("Error in getting canvas url");
             }
