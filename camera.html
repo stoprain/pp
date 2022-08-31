@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="“en”">
+  <head>
+    <meta charset=“utf-8" />
+  </head>
+  <body>
+    <div>
+      <canvas id="tagCanvas" />
+      <video
+        id="video"
+        preload="auto"
+        loop
+        playsinline
+        webkit-playsinline="true"
+        x5-playsinline="true"
+        muted="true"
+      />
+    </div>
+    <script>
+      const getLuminosity = (imageData) => {
+        let result = 0;
+        let x = 0;
+        for (let i = 0; i < imageData.length; i += 4) {
+          const r = imageData[i];
+          const g = imageData[i + 1];
+          const b = imageData[i + 2];
+          result += 0.299 * r + 0.587 * g + 0.114 * b;
+          x += 1;
+        }
+        return result / x;
+      };
+      navigator.mediaDevices
+        .getUserMedia({
+          audio: true,
+          video: {
+            width: { min: 1280 },
+            height: { min: 720 },
+          },
+        })
+        .then(function (stream) {
+          const video = document.getElementById("video");
+          if ("srcObject" in video) {
+            video.srcObject = stream;
+            delete video.src;
+          } else {
+            video.src = stream;
+          }
+
+          video.onloadedmetadata = () => {
+            video.play();
+            video.muted = true;
+            var canvas = document.querySelector("#tagCanvas");
+            var ctx = canvas.getContext("2d");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            try {
+              
+              setInterval(() => {
+                
+                ctx.drawImage(video, 0, 0);
+                var imageUrl = canvas.toDataURL();
+              console.log(imageUrl);
+                const imageData = ctx.getImageData(
+                  0,
+                  0,
+                  canvas.width,
+                  canvas.height
+                );
+                console.log(imageData);
+                const start = Date.now();
+                getLuminosity(imageData.data);
+                console.log(Date.now() - start);
+              }, 5000);
+            } catch (e) {
+              alert("Error in getting canvas url");
+            }
+          };
+        })
+        .catch(function (err) {
+          console.log(err);
+          navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: {
+              width: { min: 1280 },
+              height: { min: 720 },
+            },
+          });
+        });
+    </script>
+  </body>
+</html>
