@@ -2,11 +2,37 @@
 <html lang="“en”">
   <head>
     <meta charset=“utf-8" />
+    <style>
+      label.cameraButton {
+        display: inline-block;
+        margin: 1em 0;
+
+        /* Styles to make it look like a button */
+        padding: 0.5em;
+        border: 2px solid #666;
+        border-color: #eee #ccc #ccc #eee;
+        background-color: #ddd;
+      }
+
+      /* Look like a clicked/depressed button */
+      label.cameraButton:active {
+        border-color: #ccc #eee #eee #ccc;
+      }
+
+      /* This is the part that actually hides the 'Choose file' text box for camera inputs */
+      label.cameraButton input[accept*="camera"] {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <div>
-      <canvas id="tagCanvas" />
-      <video
+      <!-- <canvas id="tagCanvas" /> -->
+      <label class="cameraButton"
+        >Take a picture
+        <input type="file" accept="image/*;capture=camera" id="imageCapture"/>
+      </label>
+      <!-- <video
         id="video"
         preload="auto"
         loop
@@ -14,79 +40,84 @@
         webkit-playsinline="true"
         x5-playsinline="true"
         muted="true"
-      />
+      /> -->
     </div>
     <script>
-      const getLuminosity = (imageData) => {
-        let result = 0;
-        let x = 0;
-        for (let i = 0; i < imageData.length; i += 4) {
-          const r = imageData[i];
-          const g = imageData[i + 1];
-          const b = imageData[i + 2];
-          result += 0.299 * r + 0.587 * g + 0.114 * b;
-          x += 1;
-        }
-        return result / x;
-      };
-      navigator.mediaDevices
-        .getUserMedia({
-          audio: true,
-          video: {
-            width: { min: 1280 },
-            height: { min: 720 },
-          },
-        })
-        .then(function (stream) {
-          const video = document.getElementById("video");
-          if ("srcObject" in video) {
-            video.srcObject = stream;
-            delete video.src;
-          } else {
-            video.src = stream;
-          }
+      // const getLuminosity = (imageData) => {
+      //   let result = 0;
+      //   let x = 0;
+      //   for (let i = 0; i < imageData.length; i += 4) {
+      //     const r = imageData[i];
+      //     const g = imageData[i + 1];
+      //     const b = imageData[i + 2];
+      //     result += 0.299 * r + 0.587 * g + 0.114 * b;
+      //     x += 1;
+      //   }
+      //   return result / x;
+      // };
+      // navigator.mediaDevices
+      //   .getUserMedia({
+      //     audio: true,
+      //     video: {
+      //       width: { min: 1280 },
+      //       height: { min: 720 },
+      //     },
+      //   })
+      //   .then(function (stream) {
+      //     const video = document.getElementById("video");
+      //     if ("srcObject" in video) {
+      //       video.srcObject = stream;
+      //       delete video.src;
+      //     } else {
+      //       video.src = stream;
+      //     }
 
-          video.onloadedmetadata = () => {
-            video.play();
-            video.muted = true;
-            var canvas = document.querySelector("#tagCanvas");
-            var ctx = canvas.getContext("2d");
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            
-            try {
-              
-              setInterval(() => {
-                
-                ctx.drawImage(video, 0, 0);
-                var imageUrl = canvas.toDataURL();
-              console.log(imageUrl);
-                const imageData = ctx.getImageData(
-                  0,
-                  0,
-                  canvas.width,
-                  canvas.height
-                );
-                console.log(imageData);
-                const start = Date.now();
-                getLuminosity(imageData.data);
-                console.log(Date.now() - start);
-              }, 5000);
-            } catch (e) {
-              alert("Error in getting canvas url");
-            }
-          };
-        })
-        .catch(function (err) {
-          console.log(err);
-          navigator.mediaDevices.getUserMedia({
-            audio: true,
-            video: {
-              width: { min: 1280 },
-              height: { min: 720 },
-            },
-          });
-        });
+      //     video.onloadedmetadata = () => {
+      //       video.play();
+      //       video.muted = true;
+      //       var canvas = document.querySelector("#tagCanvas");
+      //       var ctx = canvas.getContext("2d");
+      //       canvas.width = video.videoWidth;
+      //       canvas.height = video.videoHeight;
+
+      //       try {
+
+      //         setInterval(() => {
+
+      //           ctx.drawImage(video, 0, 0);
+      //           var imageUrl = canvas.toDataURL();
+      //         console.log(imageUrl);
+      //           const imageData = ctx.getImageData(
+      //             0,
+      //             0,
+      //             canvas.width,
+      //             canvas.height
+      //           );
+      //           console.log(imageData);
+      //           const start = Date.now();
+      //           getLuminosity(imageData.data);
+      //           console.log(Date.now() - start);
+      //         }, 5000);
+      //       } catch (e) {
+      //         alert("Error in getting canvas url");
+      //       }
+      //     };
+      //   })
+      //   .catch(function (err) {
+      //     console.log(err);
+      //     navigator.mediaDevices.getUserMedia({
+      //       audio: true,
+      //       video: {
+      //         width: { min: 1280 },
+      //         height: { min: 720 },
+      //       },
+      //     });
+      //   });
+    </script>
+    <script>
+      document.getElementById('imageCapture').addEventListener("change", (e) => {
+        console.log(e)
+      })
     </script>
   </body>
 </html>
