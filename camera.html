@@ -23,6 +23,13 @@
       label.cameraButton input[accept*="camera"] {
         display: none;
       }
+      #display-image {
+        width: 400px;
+        height: 225px;
+        border: 1px solid black;
+        background-position: center;
+        background-size: cover;
+      }
     </style>
   </head>
   <body>
@@ -30,8 +37,15 @@
       <!-- <canvas id="tagCanvas" /> -->
       <label class="cameraButton"
         >Take a picture
-        <input type="file" accept="image/*;capture=camera" capture="camera" capture id="imageCapture"/>
+        <input
+          type="file"
+          accept="image/*;capture=camera"
+          capture="camera"
+          capture
+          id="imageCapture"
+        />
       </label>
+      <div id="display-image"></div>
       <!-- <video
         id="video"
         preload="auto"
@@ -115,9 +129,19 @@
       //   });
     </script>
     <script>
-      document.getElementById('imageCapture').addEventListener("change", (e) => {
-        console.log(e)
-      })
+      document
+        .getElementById("imageCapture")
+        .addEventListener("change", (e) => {
+          console.log(e);
+          const reader = new FileReader();
+          reader.addEventListener("load", () => {
+            const uploaded_image = reader.result;
+            document.getElementById(
+              "display-image"
+            ).style.backgroundImage = `url(${uploaded_image})`;
+          });
+          reader.readAsDataURL(e.target.files[0]);
+        });
     </script>
   </body>
 </html>
