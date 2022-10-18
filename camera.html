@@ -45,7 +45,17 @@
           id="imageCapture"
         />
       </label>
+      <button id="openWebCam">Open WebCam</button>
       <div id="display-image"></div>
+      <video
+        id="video"
+        preload="auto"
+        loop
+        playsinline
+        webkit-playsinline="true"
+        x5-playsinline="true"
+        muted
+      ></video>
       <!-- <video
         id="video"
         preload="auto"
@@ -142,6 +152,28 @@
           });
           reader.readAsDataURL(e.target.files[0]);
         });
+
+      document.getElementById("openWebCam").addEventListener("click", () => {
+        var video = document.getElementById("video");
+        var mediaDevices = navigator.mediaDevices;
+        mediaDevices
+          .getUserMedia({
+            video: true,
+            audio: true,
+          })
+          .then((stream) => {
+            // Changing the source of video to current stream.
+            video.srcObject = stream;
+            track = stream.getVideoTracks()[0];
+            track.applyConstraints({
+              advanced: [{ focusMode: "manual", focusDistance: 0.33 }],
+            });
+            video.addEventListener("loadedmetadata", () => {
+              video.play();
+            });
+          })
+          .catch(alert);
+      });
     </script>
   </body>
 </html>
