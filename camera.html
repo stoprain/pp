@@ -43,6 +43,7 @@
           capture="camera"
           capture
           id="imageCapture"
+          onclick="javascript:prepareForPicker()"
         />
       </label>
       <button id="openWebCam">Open WebCam</button>
@@ -79,9 +80,7 @@
         .then(function (devices) {
           devices.forEach(function (device) {
             document.getElementById("log").innerText +=
-              "\n" +
-              JSON.stringify(device) + 
-              "\n";
+              "\n" + JSON.stringify(device) + "\n";
           });
         })
         .catch(function (err) {
@@ -161,6 +160,21 @@
       //   });
     </script>
     <script>
+      function getAndroidVersion() {
+        var ua = navigator.userAgent;
+        var match = ua.match(/Android\s([0-9\.]*)/);
+        return match ? match[1] : false;
+      }
+      function prepareForPicker() {
+        document.getElementById("log").innerText +=
+            "\n" + "file loader clicked " + "\n";
+        if (getAndroidVersion().indexOf("4.4") != -1) {
+          document.getElementById("log").innerText +=
+            "\n" + "not 4.4 " + JSON.stringify(window.jsi) + "\n";
+          window.jsi.showPicker();
+          return false;
+        }
+      }
       document
         .getElementById("imageCapture")
         .addEventListener("change", (e) => {
@@ -169,7 +183,7 @@
           const reader = new FileReader();
           reader.addEventListener("load", () => {
             document.getElementById("log").innerText +=
-            "\n" + "native camera data......." + JSON.stringify(e) + "\n";
+              "\n" + "native camera data......." + JSON.stringify(e) + "\n";
             const uploaded_image = reader.result;
             document.getElementById(
               "display-image"
@@ -199,9 +213,9 @@
               video.play();
             });
           })
-          .catch(e => {
+          .catch((e) => {
             document.getElementById("log").innerText +=
-            "\n" + "error......." + JSON.stringify(e) + "\n";
+              "\n" + "error......." + JSON.stringify(e) + "\n";
           });
       });
     </script>
