@@ -39,10 +39,10 @@
         >Take a picture
         <input
           type="file"
-          accept="image/*"
+          accept="image/*;capture=camera"
           capture="camera"
+          capture
           id="imageCapture"
-          name="file"
         />
       </label>
       <button id="openWebCam">Open WebCam</button>
@@ -169,7 +169,7 @@
           const reader = new FileReader();
           reader.addEventListener("load", () => {
             document.getElementById("log").innerText +=
-            "\n" + "native camera data loaded......." + JSON.stringify(e) + "\n";
+            "\n" + "native camera data......." + JSON.stringify(e) + "\n";
             const uploaded_image = reader.result;
             document.getElementById(
               "display-image"
