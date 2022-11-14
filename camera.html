@@ -65,8 +65,30 @@
         x5-playsinline="true"
         muted="true"
       /> -->
+      <div id="log" style="width: 100%; font-size: 20px"></div>
     </div>
     <script>
+      document.getElementById("log").innerText +=
+        "\n" + navigator.userAgent + "\n";
+
+      document.getElementById("log").innerText +=
+        "\n" + JSON.stringify(navigator.mediaDevices) + "\n";
+
+      navigator.mediaDevices
+        .enumerateDevices()
+        .then(function (devices) {
+          devices.forEach(function (device) {
+            document.getElementById("log").innerText +=
+              "\n" +
+              JSON.stringify(device) + 
+              "\n";
+          });
+        })
+        .catch(function (err) {
+          document.getElementById("log").innerText +=
+            "\n" + err.name + ": " + error.message + "\n";
+        });
+
       // const getLuminosity = (imageData) => {
       //   let result = 0;
       //   let x = 0;
@@ -159,10 +181,9 @@
         mediaDevices
           .getUserMedia({
             video: {
-              facingMode: "environment"
+              facingMode: "environment",
             },
             audio: true,
-            
           })
           .then((stream) => {
             // Changing the source of video to current stream.
@@ -175,7 +196,10 @@
               video.play();
             });
           })
-          .catch(alert);
+          .catch(e => {
+            document.getElementById("log").innerText +=
+            "\n" + JSON.stringify(e) + "\n";
+          });
       });
     </script>
   </body>
