@@ -1,0 +1,18 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <h1>platform</h1>
+    <p id="p"></p>
+    <h1>userAgent</h1>
+    <p id="u"></p>
+    <script>
+      var p = document.getElementById("p");
+      var ptext = document.createTextNode(window.navigator.platform);
+      p.appendChild(ptext);
+      var u = document.getElementById("u");
+      var utext = document.createTextNode(window.navigator.userAgent);
+      u.appendChild(utext);
+    </script>
+  </body>
+</html>
