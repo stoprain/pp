@@ -16,8 +16,7 @@
       
       const video = document.createElement('video');
       video.onerror = (e) => {
-        log.style.display = 'block'
-        log.innerText = JSON.stringify(e)
+        console.log(e)
       }
       video.setAttribute('id', 'video-mock');
       video.setAttribute('controls', 'true');
