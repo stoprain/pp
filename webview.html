@@ -13,6 +13,20 @@
       var u = document.getElementById("u");
       var utext = document.createTextNode(window.navigator.userAgent);
       u.appendChild(utext);
+      
+      const video = document.createElement('video');
+      video.onerror = (e) => {
+        log.style.display = 'block'
+        log.innerText = JSON.stringify(e)
+      }
+      video.setAttribute('id', 'video-mock');
+      video.setAttribute('controls', 'true');
+      video.setAttribute('crossOrigin', 'anonymous');
+      video.setAttribute("src", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
+      video.setAttribute('type', 'video/mp4');
+      video.style = "position: fixed; left: 0; top: 0; width: 100%; height: 50%";
+      video.loop = true;
+      document.querySelector('body').appendChild(video);
     </script>
   </body>
 </html>
