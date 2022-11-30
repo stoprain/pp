@@ -19,11 +19,12 @@
         console.log(e)
       }
       video.setAttribute('id', 'video-mock');
-      video.setAttribute('controls', 'playsinline');
       video.setAttribute('crossOrigin', 'anonymous');
-      video.setAttribute("src", "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
-      video.setAttribute('type', 'video/mp4');
-      video.setAttribute('muted', 'true');
+      video.muted = true;
+      video.autoplay = true;
+      video.loop = true;
+      video.setAttribute('playsinline', '');
+      video.src = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
       video.style = "position: fixed; left: 0; top: 0; width: 100%; height: 50%";
       video.loop = true;
       document.querySelector('body').appendChild(video);
