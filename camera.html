@@ -42,7 +42,7 @@
           accept="image/*"
           capture="camera"
           id="imageCapture"
-          onclick="javascript:prepareForPicker()"
+          onclick="javascript:prepareForPicker()" onerror="onerror"
         />
       </label>
       <button id="openWebCam">Open WebCam</button>
@@ -159,6 +159,9 @@
       //   });
     </script>
     <script>
+      function onerror(e) {
+        console.log(e);
+      }
       function getAndroidVersion() {
         var ua = navigator.userAgent;
         var match = ua.match(/Android\s([0-9\.]*)/);
