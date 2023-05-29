@@ -1,0 +1,34 @@
+<html>
+  <script>
+    function getInfo() {
+      window.IDAssurance.getInfo()
+    }
+    function authorization() {
+      window.IDAssurance.authorization()
+    }
+    function gotosetting() {
+      window.IDAssurance.closeIdAssurance(JSON.stringify({ action: "setting"}))
+    }
+    function idAssuranceCallback(payload) {
+      console.log(payload)
+    }
+    function branding1() {
+      window.IDAssurance.branding(JSON.stringify({ closeButton: "xmark"}))
+    }
+    function branding2() {
+      window.IDAssurance.branding(JSON.stringify({ closeButton: "xmark.circle.fill"}))
+    }
+    function closeIdAssurance() {
+      window.IDAssurance.closeIdAssurance(JSON.stringify({ action: "cancel"}))
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <body>
+    <button onclick="getInfo()">getInfo</button>
+    <button onclick="authorization()">authorization</button>
+    <button onclick="gotosetting()">gotosetting</button>
+    <button onclick="branding1()">branding.xmark</button>
+    <button onclick="branding2()">xmark.circle.fill</button>
+    <button onclick="closeIdAssurance()">close</button>
+  </body>
+</html>
