@@ -3,7 +3,7 @@
         "apps": [],
         "details": [
             {
-                "appID": "727K56WV67.com.paypal.ppclient-development",
+                "appID": "E8MXEZ8C96.com.paypal.ppclient-development.TetheredID",
                 "paths": [
                     "/idassurance.html"
                 ]
@@ -12,7 +12,7 @@
     },
     "webcredentials": {
         "apps": [
-            "727K56WV67.com.paypal.ppclient-development"
+            "E8MXEZ8C96.com.paypal.ppclient-development.TetheredID"
         ]
     }
 }
