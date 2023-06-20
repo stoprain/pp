@@ -23,12 +23,12 @@
           var afterApp = new Date().valueOf();
           if (afterApp - beforeApp < 100) {
               setTimeout(function() {
-                window.location = "https://bing.com";      
+                window.top.location = "https://bing.com";      
               }, 25);
           } else {
               if (timer === null) {
                   timer = setTimeout(function() {
-                    window.location = "https://bing.com";      
+                   window.top.location = "https://bing.com";      
                   }, 200);
               }
           }
