@@ -12,7 +12,7 @@
       }
 
       function redirectAndroid() {
-          setTimeout(function () { window.location = "https://itunes.apple.com/appdir"; }, 25);
+          setTimeout(function () { window.location = "https://bing.com"; }, 25);
           window.location = "paypal://";
       }
 
@@ -23,12 +23,12 @@
           var afterApp = new Date().valueOf();
           if (afterApp - beforeApp < 100) {
               setTimeout(function() {
-                  "https://itunes.apple.com/appdir";      
+                window.location = "https://bing.com";      
               }, 25);
           } else {
               if (timer === null) {
                   timer = setTimeout(function() {
-                      "https://itunes.apple.com/appdir";      
+                    window.location = "https://bing.com";      
                   }, 200);
               }
           }
