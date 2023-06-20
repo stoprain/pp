@@ -1,0 +1,40 @@
+<html>
+  <body>
+    <script>
+      var timer = null;
+
+      function setListener() {
+          window.document.addEventListener("visibilitychange", function(e) {
+              window.clearTimeout(timer);
+              timer = null;
+              window.open('','_self').close();
+          });
+      }
+
+      function redirectAndroid() {
+          setTimeout(function () { window.location = "https://itunes.apple.com/appdir"; }, 25);
+          window.location = "paypal://";
+      }
+
+      function redirecIOS() {
+          setListener();
+          var beforeApp = new Date().valueOf();
+          window.location.href = "paypal://";
+          var afterApp = new Date().valueOf();
+          if (afterApp - beforeApp < 100) {
+              setTimeout(function() {
+                  "https://itunes.apple.com/appdir";      
+              }, 25);
+          } else {
+              if (timer === null) {
+                  timer = setTimeout(function() {
+                      "https://itunes.apple.com/appdir";      
+                  }, 200);
+              }
+          }
+        }
+
+        redirecIOS()
+    </script>
+  </body>
+</html>
