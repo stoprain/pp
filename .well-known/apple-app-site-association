@@ -5,7 +5,8 @@
             {
                 "appID": "E8MXEZ8C96.com.paypal.ppclient-development.TetheredID",
                 "paths": [
-                    "/idassurance/link"
+                    "/idassurance/link",
+                    "/idassurance/test"
                 ]
               }
         ]
