@@ -3,6 +3,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <input type="file" id="imageFile" accept="image/*" capture="filesystem" />
+    <button class="pick-file">test</button>
+    <script>
+      let fileHandles;
+      const options = {
+      multiple: true,
+      };
+      
+      document.querySelector(".pick-file").onclick = async () => {
+      fileHandles = await window.showOpenFilePicker(options);
+      
+      const allContent = await Promise.all(
+        fileHandles.map(async (fileHandle) => {
+          const file = await fileHandle.getFile();
+          const content = await file.text();
+          return content;
+        })
+      );
+      
+      console.log(allContent);
+      };
+    </script>
   </body>
 </html>
