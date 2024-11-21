@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鱼竿商城</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .product-image {
+            width: 100%;
+            height: auto;
+        }
+        .product-info {
+            margin-top: 20px;
+        }
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .product-price {
+            color: #e74c3c;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        .product-description {
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+        .buy-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buy-button:hover {
+            background-color: #2980b9;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        .animated-text {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="fish-rod.jpeg" alt="鱼竿" class="product-image">
+        <div class="product-info">
+            <div class="product-title">高级碳素鱼竿</div>
+            <div class="product-price">价格: ¥299.00</div>
+            <div class="product-description">
+                <p>这款高级碳素鱼竿采用高强度碳纤维材料，轻便且耐用，适合各种钓鱼场景。其设计符合人体工学，手感舒适，助您轻松捕获大鱼。</p>
+                <ul>
+                    <li>长度：3.6米</li>
+                    <li>重量：200克</li>
+                    <li>材质：碳纤维</li>
+                    <li>适用场合：海钓、淡水钓</li>
+                </ul>
+            </div>
+            <button class="buy-button" onclick="showMessage()">立即购买</button>
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+    <script>
+        function showMessage() {
+            const messages = [
+                "感谢您购买这款高级鱼竿！🎣\n",
+                "上海的黄浦江和苏州河是绝佳的钓鱼圣地。🌊\n",
+                "春季和秋季是钓鱼的最佳季节，鱼儿们特别活跃。🐟\n",
+                "清晨6点到8点，或傍晚5点到7点是钓鱼的黄金时间。⏰\n",
+                "记得带上保暖衣物、钓鱼椅和充足的零食和水。🧣🧳\n",
+                "祝您钓鱼愉快，收获满满！🎉\n"
+            ];
+            
+            const messageContainer = document.getElementById('message');
+            let messageIndex = 0;
+            let charIndex = 0;
+            
+            function typeMessage() {
+                if (messageIndex < messages.length) {
+                    if (charIndex < messages[messageIndex].length) {
+                        // 追加新字符而不是替换全部内容
+                        messageContainer.innerHTML += messages[messageIndex][charIndex];
+                        charIndex++;
+                        setTimeout(typeMessage, 50);
+                    } else {
+                        // 一条消息打印完成，准备打印下一条
+                        charIndex = 0;
+                        messageIndex++;
+                        setTimeout(typeMessage, 500);
+                    }
+                }
+            }
+            
+            // 只在第一次点击时清空容器
+            messageContainer.innerHTML = '';
+            typeMessage();
+        }
+    </script>
+</body>
+</html>
