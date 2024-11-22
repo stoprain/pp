@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鱼竿商城</title>
+    <title>商城</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -139,16 +139,20 @@
         // 商品数据
         const products = {
             a: {
+                title: "钓鱼装备商店",
                 name: "高级碳素鱼竿",
                 description: "这款高级碳素鱼竿采用高强度碳纤维材料，轻便且耐用，适合各种钓鱼场景。其设计符合人体工学，手感舒适，助您轻松捕获大鱼。<br/>长度：3.6米<br/>重量：200克<br/>材质：碳纤维<br/>适用场合：海钓、淡水钓",
                 price: "¥299.00",
-                image: "a.jpg"
+                image: "a.jpg",
+                audio: "a_f.mp3"
             },
             b: {
-                name: "穆桑王榴莲",
+                title: "进口水果商店",
+                name: "穆桑王有机榴莲",
                 description: "<b>原产地</b>：马来西亚彭亨州。<br/><b>特点</b>：果肉奶油浓稠，甜度极高，有微小的种子和令人敬畏的荆棘覆盖的外壳。每个榴莲的重量在1.4千克至2.8千克之间，形状整圆，是榴莲中的佼佼者。",
                 price: "199元/500g",
-                image: "b.jpg"
+                image: "b.jpg",
+                audio: "b_f.mp3"
             }
         };
 
@@ -170,6 +174,7 @@
             document.getElementById('product-name').textContent = product.name;
             document.getElementById('product-description').innerHTML = product.description;
             document.getElementById('product-price').textContent = product.price;
+            document.title = product.title;
         }
 
         // 页面加载时执行
@@ -177,6 +182,13 @@
 
 
         function showMessage() {
+
+            console.log(products)
+            console.log(currentItem)
+            console.log(products[currentItem])
+            if (products[currentItem].audio) {
+                playAudio(products[currentItem].audio);
+            }
 
             document.getElementById('product-section').style.display = 'none';
             document.getElementById('confirmation-section').style.display = 'block';
@@ -271,6 +283,11 @@
                 details.style.display = 'none';
                 toggleText.textContent = '展开详情';
             }
+        }
+
+        function playAudio(audioSrc) {
+            const audio = new Audio(audioSrc);
+            audio.play();
         }
     </script>
 </body>
