@@ -84,10 +84,9 @@
         <div id="product-section" class="product-details">
             <img id="product-image" alt="鱼竿" class="product-image">
             <div class="product-info">
-                <div class="product-title" id="product-name">高级碳素鱼竿</div>
-                <div class="product-price" id="product-price">价格: ¥299.00</div>
+                <div class="product-title" id="product-name"></div>
+                <div class="product-price" id="product-price"></div>
                 <div class="product-description" id="product-description">
-                    这款高级碳素鱼竿采用高强度碳纤维材料，轻便且耐用，适合各种钓鱼场景。其设计符合人体工学，手感舒适，助您轻松捕获大鱼。
                 </div>
                 <button class="buy-button" onclick="showMessage()">立即购买</button>
             </div>
@@ -149,10 +148,18 @@
             b: {
                 title: "进口水果商店",
                 name: "穆桑王有机榴莲",
-                description: "<b>原产地</b>：马来西亚彭亨州。<br/><b>特点</b>：果肉奶油浓稠，甜度极高，有微小的种子和令人敬畏的荆棘覆盖的外壳。每个榴莲的重量在1.4千克至2.8千克之间，形状整圆，是榴莲中的佼佼者。",
+                description: "<b>原产地：</b>马来西亚彭亨州。<br/><b>特点：</b>果肉奶油浓稠，甜度极高，有微小的种子和令人敬畏的荆棘覆盖的外壳。每个榴莲的重量在1.4千克至2.8千克之间，形状整圆，是榴莲中的佼佼者。",
                 price: "199元/500g",
                 image: "b.jpg",
                 audio: "b_f.mp3"
+            },
+            c: {
+                title: "Steam游戏商店",
+                name: "沉浸式VR游戏舱体验套装",
+                description: "欢迎体验我们的沉浸式VR游戏舱体验套装！这款套装融合了最先进的虚拟现实技术，为您带来身临其境的游戏体验。无论您是探险家、竞速达人还是射击高手，这款套装都能满足您对游戏的无限想象。<br/><br/><b>特点：</b><br/>高清VR头显：提供清晰逼真的图像和流畅的动作跟踪，让您完全沉浸在游戏世界中。<br/>全向运动平台：与游戏世界互动，感受真实运动的乐趣，让您身临其境。<br/>舒适设计：舒适的头戴设备和人体工程学设计，确保长时间游戏也不感到疲劳，让您尽情享受游戏乐趣。</br><br/><b>规格：</b><br/>尺寸：** 2.5米 x 2.5米<br/>重量：150千克<br/>适用场合：家庭娱乐、游戏体验中心、聚会活动<br/><br/>带上我们的沉浸式VR游戏舱体验套装，探索虚拟世界的无限可能性，开启您的游戏之旅！",
+                price: "¥999.00",
+                image: "c.jpg",
+                audio: "c_f.mp3"
             }
         };
 
@@ -166,9 +173,9 @@
 
         // 加载商品信息
         function loadProductInfo() {
-            const item = getUrlParameter('item');
+            const item = getUrlParameter('item') || 'a';
             currentItem = item;
-            const product = products[item] || products.a; // 默认显示商品a
+            const product = products[item];
 
             document.getElementById('product-image').src = product.image;
             document.getElementById('product-name').textContent = product.name;
@@ -205,6 +212,13 @@
                 b: [
                     "欢迎购买有机榴莲！\n",
                     "榴莲富含维生素和矿物质，可增强免疫力、促进消化、补充能量、改善睡眠，同时抗氧化成分有益皮肤健康，支持心脏功能，是营养丰富的健康之选。\n"
+                ],
+                c: [
+                    "用户：嗨，小叽，我刚买了一个新的VR游戏机！\n",
+                    "小叽：哇，这真是个令人兴奋的消息！主人，你准备玩哪种类型的游戏呢？\n",
+                    "用户：我打算玩一些冒险和动作游戏。\n",
+                    "小叽：太棒了，主人！我知道你一直喜欢这类游戏。我可以帮你找一些评价高的VR冒险和动作游戏，你觉得怎么样？\n",
+                    "用户：好主意，谢谢你，小叽。\n",
                 ]
             };
 
