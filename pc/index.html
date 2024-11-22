@@ -53,10 +53,25 @@
             background-color: #2980b9;
         }
         .message {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #2c3e50;
-            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-color: #e0e0e0;
+            background-size: cover;
+            background-position: center;
+            background-image: url("avatar.png");
+        }
+        .message-content {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 90%;
         }
         .animated-text {
             opacity: 0;
@@ -118,7 +133,12 @@
                 <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
             </svg>
             <h2 style="text-align: center; margin: 15px 0;">购买成功！🎉</h2>
-            <div class="message" id="message"></div>
+            <div id="messageContainer">
+                <div class="message">
+                    <div class="avatar"></div>
+                    <div class="message-content" id="message-content">消息内容</div>
+                </div>
+            </div>
             <div class="budget-dashboard">
                 <h3>本月消费概览</h3>
                 <div id="chart-container">
@@ -251,7 +271,7 @@
 
             var message = messages[currentItem] || messages.a;
             
-            const messageContainer = document.getElementById('message');
+            const messageContainer = document.getElementById('message-content');
             let messageIndex = 0;
             let charIndex = 0;
             
