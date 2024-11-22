@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鱼竿商城</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,29 +61,89 @@
         .animated-text {
             opacity: 0;
         }
+        .thumbs-up {
+            display: block;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            color: #10B981;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        #chart-container {
+            height: 200px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="fish-rod.jpeg" alt="鱼竿" class="product-image">
-        <div class="product-info">
-            <div class="product-title">高级碳素鱼竿</div>
-            <div class="product-price">价格: ¥299.00</div>
-            <div class="product-description">
-                <p>这款高级碳素鱼竿采用高强度碳纤维材料，轻便且耐用，适合各种钓鱼场景。其设计符合人体工学，手感舒适，助您轻松捕获大鱼。</p>
-                <ul>
-                    <li>长度：3.6米</li>
-                    <li>重量：200克</li>
-                    <li>材质：碳纤维</li>
-                    <li>适用场合：海钓、淡水钓</li>
-                </ul>
+        <div id="product-section" class="product-details">
+            <img src="fish-rod.jpeg" alt="鱼竿" class="product-image">
+            <div class="product-info">
+                <div class="product-title">高级碳素鱼竿</div>
+                <div class="product-price">价格: ¥299.00</div>
+                <div class="product-description">
+                    <p>这款高级碳素鱼竿采用高强度碳纤维材料，轻便且耐用，适合各种钓鱼场景。其设计符合人体工学，手感舒适，助您轻松捕获大鱼。</p>
+                    <ul>
+                        <li>长度：3.6米</li>
+                        <li>重量：200克</li>
+                        <li>材质：碳纤维</li>
+                        <li>适用场合：海钓、淡水钓</li>
+                    </ul>
+                </div>
+                <button class="buy-button" onclick="showMessage()">立即购买</button>
             </div>
-            <button class="buy-button" onclick="showMessage()">立即购买</button>
+        </div>
+        <div id="confirmation-section" style="display: none;" class="purchase-confirmation">
+            <svg class="thumbs-up" viewBox="0 0 24 24" width="100" height="100" stroke="currentColor" stroke-width="2" fill="none">
+                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+            </svg>
+            <h2 style="text-align: center; margin: 15px 0;">购买成功！🎉</h2>
             <div class="message" id="message"></div>
+            <div class="budget-dashboard">
+                <h3>本月消费概览</h3>
+                <div id="chart-container">
+                    <canvas id="chart"></canvas>
+                </div>
+                <button onclick="toggleDetails()" style="background: none; border: none; color: #3B82F6; cursor: pointer; margin-top: 10px;">
+                    <span id="details-toggle-text">展开详情</span>
+                </button>
+                <div id="spending-details" style="display: none; margin-top: 15px;">
+                    <div style="margin-top: 15px;">
+                        <p>总预算: ¥2,550</p>
+                        <p>已使用: ¥738</p>
+                        <p style="font-weight: bold;">剩余: ¥1,812</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>交通</span>
+                        <span>¥200</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>水电煤</span>
+                        <span>¥320</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>餐饮</span>
+                        <span>¥150</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>其他</span>
+                        <span>¥68</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
         function showMessage() {
+
+            document.getElementById('product-section').style.display = 'none';
+            document.getElementById('confirmation-section').style.display = 'block';
+
             const messages = [
                 "感谢您购买这款高级鱼竿！🎣\n",
                 "上海的黄浦江和苏州河是绝佳的钓鱼圣地。🌊\n",
@@ -115,6 +176,56 @@
             // 只在第一次点击时清空容器
             messageContainer.innerHTML = '';
             typeMessage();
+
+            // 绘制消费柱状图
+            const ctx = document.getElementById('chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['交通', '水电煤', '餐饮', '其他'],
+                    datasets: [{
+                        data: [200, 320, 150, 68],
+                        backgroundColor: [
+                            '#0088FE', 
+                            '#00C49F', 
+                            '#FFBB28', 
+                            '#FF8042'
+                        ]
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '消费金额 (¥)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function toggleDetails() {
+            const details = document.getElementById('spending-details');
+            const toggleText = document.getElementById('details-toggle-text');
+            
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                toggleText.textContent = '收起详情';
+            } else {
+                details.style.display = 'none';
+                toggleText.textContent = '展开详情';
+            }
         }
     </script>
 </body>
