@@ -82,18 +82,12 @@
 <body>
     <div class="container">
         <div id="product-section" class="product-details">
-            <img src="fish-rod.jpeg" alt="鱼竿" class="product-image">
+            <img id="product-image" alt="鱼竿" class="product-image">
             <div class="product-info">
-                <div class="product-title">高级碳素鱼竿</div>
-                <div class="product-price">价格: ¥299.00</div>
-                <div class="product-description">
-                    <p>这款高级碳素鱼竿采用高强度碳纤维材料，轻便且耐用，适合各种钓鱼场景。其设计符合人体工学，手感舒适，助您轻松捕获大鱼。</p>
-                    <ul>
-                        <li>长度：3.6米</li>
-                        <li>重量：200克</li>
-                        <li>材质：碳纤维</li>
-                        <li>适用场合：海钓、淡水钓</li>
-                    </ul>
+                <div class="product-title" id="product-name">高级碳素鱼竿</div>
+                <div class="product-price" id="product-price">价格: ¥299.00</div>
+                <div class="product-description" id="product-description">
+                    这款高级碳素鱼竿采用高强度碳纤维材料，轻便且耐用，适合各种钓鱼场景。其设计符合人体工学，手感舒适，助您轻松捕获大鱼。
                 </div>
                 <button class="buy-button" onclick="showMessage()">立即购买</button>
             </div>
@@ -139,29 +133,80 @@
         </div>
     </div>
     <script>
+
+        var currentItem = 'a'
+
+        // 商品数据
+        const products = {
+            a: {
+                name: "高级碳素鱼竿",
+                description: "这款高级碳素鱼竿采用高强度碳纤维材料，轻便且耐用，适合各种钓鱼场景。其设计符合人体工学，手感舒适，助您轻松捕获大鱼。<br/>长度：3.6米<br/>重量：200克<br/>材质：碳纤维<br/>适用场合：海钓、淡水钓",
+                price: "¥299.00",
+                image: "a.jpg"
+            },
+            b: {
+                name: "穆桑王榴莲",
+                description: "<b>原产地</b>：马来西亚彭亨州。<br/><b>特点</b>：果肉奶油浓稠，甜度极高，有微小的种子和令人敬畏的荆棘覆盖的外壳。每个榴莲的重量在1.4千克至2.8千克之间，形状整圆，是榴莲中的佼佼者。",
+                price: "199元/500g",
+                image: "b.jpg"
+            }
+        };
+
+        // 解析URL参数
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+
+        // 加载商品信息
+        function loadProductInfo() {
+            const item = getUrlParameter('item');
+            currentItem = item;
+            const product = products[item] || products.a; // 默认显示商品a
+
+            document.getElementById('product-image').src = product.image;
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-description').innerHTML = product.description;
+            document.getElementById('product-price').textContent = product.price;
+        }
+
+        // 页面加载时执行
+        window.onload = loadProductInfo;
+
+
         function showMessage() {
 
             document.getElementById('product-section').style.display = 'none';
             document.getElementById('confirmation-section').style.display = 'block';
 
-            const messages = [
-                "感谢您购买这款高级鱼竿！🎣\n",
-                "上海的黄浦江和苏州河是绝佳的钓鱼圣地。🌊\n",
-                "春季和秋季是钓鱼的最佳季节，鱼儿们特别活跃。🐟\n",
-                "清晨6点到8点，或傍晚5点到7点是钓鱼的黄金时间。⏰\n",
-                "记得带上保暖衣物、钓鱼椅和充足的零食和水。🧣🧳\n",
-                "祝您钓鱼愉快，收获满满！🎉\n"
-            ];
+            const messages = {
+                a: [
+                    "感谢您购买这款高级鱼竿！🎣\n",
+                    "上海的黄浦江和苏州河是绝佳的钓鱼圣地。🌊\n",
+                    "春季和秋季是钓鱼的最佳季节，鱼儿们特别活跃。🐟\n",
+                    "清晨6点到8点，或傍晚5点到7点是钓鱼的黄金时间。⏰\n",
+                    "记得带上保暖衣物、钓鱼椅和充足的零食和水。🧣🧳\n",
+                    "祝您钓鱼愉快，收获满满！🎉\n"
+                ],
+                b: [
+                    "欢迎购买有机榴莲！\n",
+                    "榴莲富含维生素和矿物质，可增强免疫力、促进消化、补充能量、改善睡眠，同时抗氧化成分有益皮肤健康，支持心脏功能，是营养丰富的健康之选。\n"
+                ]
+            };
+
+            var message = messages[currentItem] || messages.a;
             
             const messageContainer = document.getElementById('message');
             let messageIndex = 0;
             let charIndex = 0;
             
             function typeMessage() {
-                if (messageIndex < messages.length) {
-                    if (charIndex < messages[messageIndex].length) {
+                if (messageIndex < message.length) {
+                    if (charIndex < message[messageIndex].length) {
                         // 追加新字符而不是替换全部内容
-                        messageContainer.innerHTML += messages[messageIndex][charIndex];
+                        messageContainer.innerHTML += message[messageIndex][charIndex];
                         charIndex++;
                         setTimeout(typeMessage, 50);
                     } else {
